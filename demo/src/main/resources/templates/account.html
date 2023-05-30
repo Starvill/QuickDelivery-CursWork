@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <title>Аккаунт</title>
+  <link rel="icon" th:href="@{/icons/petsyicon.webp}">
+
+  <script>
+        function redirect(id) {
+            location.href="/account/" + id
+        }
+
+        function order(id){
+            location.href="/order/" + id
+        }
+        function redirectTimer() {
+            setTimeout('location.href="/account";', 60000);
+        }
+
+
+
+    </script>
+</head>
+<body style="background-color:  black;">
+<div class="my-4 container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11 col-xl-11">
+      <div style="background-color: white; border-radius: 25px; overflow: hidden">
+
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a href="/index">
+            <img alt="QuickDelivery" class="mx-3" style="margin-top:10px" width="100px"
+                 src="../static/icons/QuickDelivery.png" th:src="@{/icons/QuickDelivery.png}">
+          </a>
+          <button class="navbar-toggler" style="border: 2px solid #cd58d1; border-radius: 20px" type="button"
+                  data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <div class="nav-link h4 px-4 mt-3">+8(800)555-35-35</div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link h4 px-4 mt-3" href="/home">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link h4 px-4 mt-3" href="/orders/add">Добавить заказ</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle h4 px-4 mt-3"
+                   style="color: black; background-color: yellow; border-radius: 30px"
+                   id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false" th:text="${username}"></a>
+                <div class="dropdown-menu dropdown-menu-right p-0" style="border: none; background-color: transparent"
+                     aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item mb-2" th:attr="href=${linkInOrAccount}"
+                     style="background-color: yellow; color: black; border-radius: 25px"
+                     th:text="${textInOrAccount}">Войти</a>
+                  <a class="dropdown-item" th:attr="href=${linkOutOrUp}"
+                     style="background-color: grey; color: white; border-radius: 25px"
+                     th:text="${textOutOrUp}">Выйти</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <hr class="mx-3 rounded" style="background-color: yellow">
+
+        <p class="h3 font-weight-normal mt-4 text-center" style="color: black" th:text="${welcome}"></p>
+
+
+        <div class="row justify-content-center text-center">
+          <div class="col-11 col-xl-10">
+            <p class="h3 font-weight-normal my-4">Список ваших заявок</p>
+
+            <div style="border: 1px solid black; border-radius: 5px; padding: 10px; overflow: hidden"
+                 class="pb-2">
+              <div class="h3 text-left" style="color: white">
+                <div>
+
+                  <table class="table" style="color: black; background: yellow">
+                    <thead>
+                    <tr style="font-size: 22px">
+                      <th scope="col">Id</th>
+                      <th scope="col">Имя</th>
+                      <th scope="col">Тип</th>
+                      <th scope="col">Откуда</th>
+                      <th scope="col">Куда</th>
+                      <th scope="col">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody style="font-size: 18px" th:each="order : ${orders}">
+                    <th scope="row" th:text="${order.id}"></th>
+                    <td th:text="${order.name}"></td>
+                    <td th:text="${order.type}"></td>
+                    <td th:text="${order.addressFrom}"></td>
+                    <td th:text="${order.addressTo}"></td>
+                    <td th:text="${order.date}"></td>
+                    <!--<hr class="mx-3" style="background-color: white">-->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer py-3" style="background-color: black; color: white; border-radius: 0 0 0 25px">
+          <div class="mx-5">
+            <div class="row justify-content-center text-center">
+              <div class="col my-2">КОНТАКТНАЯ ИНФОРМАЦИЯ</div>
+            </div>
+            <div class="row justify-content-center text-center my-1">
+              <div class="col-6 col-xl-3">Рублев Г.М.</div>
+              <div class="col-6 col-xl-3">ИКБО-32-21</div>
+            </div>
+            <div class="row justify-content-center text-center my-1">
+              <div class="col-6 col-xl-3">
+                <a class="text-light" target="_blank"
+                   href="https://github.com/tim-lwry/jvtmplts-cw-petsy">GitHub</a>
+              </div>
+              <div class="col-6 col-xl-3">2023</div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
